@@ -358,7 +358,7 @@ def main():
             "You are instantiating a new tokenizer from scratch. This is not supported by this script."
             "You can do it from another script, save it, and load it from here, using --tokenizer_name."
         )
-	#### Knowledge Distillation
+	# ===Variant 3: Knowledge Distillation===
     if model_args.model_name_or_path:
         if 'distil' in model_args.model_name_or_path:
             model = DistillForCL.from_pretrained(

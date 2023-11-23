@@ -60,14 +60,15 @@ We trained the model on single NVIDIA 2080 Ti applied from HKU GPU Farm. If your
 cd <your directory>
 
 LR=2e-6
-MASK=0.15 #Ablaion Study 3: Masking Ratio
-LAMBDA=0.05 #Ablaion Study 4: Coefficient λ
+MASK=0.15 #===Ablaion Study 3: Masking Ratio===
+LAMBDA=0.05 #===Ablaion Study 4: Coefficient λ===
 
+#===Variant 1: Temperature: change the value of temp===
 python train.py \
     --model_name_or_path bert-base-uncased \
     --generator_name distilbert-base-uncased \
     --train_file data/wiki1m_for_simcse.txt \
-    --output_dir output_model_bert_sts_noloss \
+    --output_dir <your_output_model_dir> \
     --num_train_epochs 2 \
     --per_device_train_batch_size 64 \
     --learning_rate $LR \
@@ -80,7 +81,7 @@ python train.py \
     --mlp_only_train \
     --overwrite_output_dir \
     --logging_first_step \
-    --logging_dir logging_file \
+    --logging_dir <your_logging_dir> \
     --temp 0.05 \
     --do_train \
     --do_eval \
@@ -107,3 +108,16 @@ Model Analysis Study
 2. Dot Product
 3. Knowledge distillation([Hinton et al., 2015](https://arxiv.org/abs/1503.02531)) 
 
+### Main changes
+
+For Reproduce of the ablation experiment 1, we modified in diffcse/models.py, beginning at line 306.
+
+For abalation 2, we modified train.py, beginning at line 473.
+
+For ablation 3, 4, and variant 1, they can be realized by changing in the sbatch file, which we have commented at corresponding lines.
+
+For ablation 5, we modified in diffcse/models.py lines 56~68.
+
+For Variant 2, we modified in diffcse/models.py, beginning at line 87 and 270.
+
+For Variant 3, we modified the train.py and diffcse/models.py, and added a file: modeling_distillbert.py.

@@ -7,7 +7,7 @@ import transformers
 from transformers import RobertaTokenizer
 from modeling_roberta import RobertaPreTrainedModel, RobertaModel, RobertaLMHead
 from modeling_bert import BertPreTrainedModel, BertModel, BertLMPredictionHead
-# Knowledge Distillation
+# ===Variant 3: Knowledge Distillation===
 from modeling_distillbert import DistilBertPreTrainedModel, DistilBertModel, DistilBertForMaskedLM
 
 from transformers.activations import gelu
@@ -52,6 +52,22 @@ class ProjectionMLP(nn.Module):
     def forward(self, x):
         return self.net(x)
 
+
+# ===Ablation Study 5: Pooler choice===
+# class ProjectionMLP(nn.Module):
+#     def __init__(self, config):
+#         super().__init__()
+#         in_dim = config.hidden_size
+#         out_dim = config.hidden_size
+#         affine=False
+#         list_layers = [nn.Linear(in_dim, out_dim, bias=False),
+#                        nn.BatchNorm1d(out_dim, affine=affine)]
+#         self.net = nn.Sequential(*list_layers)
+#
+#     def forward(self, x):
+#         return self.net(x)
+
+
 class Similarity(nn.Module):
     """
     Dot product or cosine similarity
@@ -68,7 +84,7 @@ class Similarity(nn.Module):
         self.neg_avg = 0.0
 
     def forward(self, x, y):
-    	## dot product ## sim = self.cos(x, y)
+    	#===Variant 2: Dot Product===
     	#sim = torch.matmul(x,y.T)
     	sim = self.cos(x, y)
     	self.record = sim.detach()
@@ -162,7 +178,7 @@ def cl_forward(cls,
 #         token_type_ids = token_type_ids.view((-1, token_type_ids.size(-1))) # (bs * num_sent, len)
 
     # Get raw embeddings
-    ####Knowledge distillation
+    # ===Variant 3: Knowledge distillation===
 #    outputs = encoder(
 #         input_ids,
 #         attention_mask=attention_mask,
@@ -251,9 +267,10 @@ def cl_forward(cls,
         z1 = torch.cat(z1_list, 0)
         z2 = torch.cat(z2_list, 0)
 
-    # Dot Product
+    # ===Variant 2: Dot Product===
+    # cos_sim = cls.sim(z1, z2)
     cos_sim = cls.sim(z1.unsqueeze(1), z2.unsqueeze(0))
-    #cos_sim = cls.sim(z1, z2)
+
     # Hard negative
     if num_sent >= 3:
         z1_z3_cos = cls.sim(z1.unsqueeze(1), z3.unsqueeze(0))
@@ -287,8 +304,9 @@ def cl_forward(cls,
         cls.electra_acc = float(((prediction == e_labels) * attention_mask).sum()/attention_mask.sum())
         # masked_lm_loss = loss_fct(prediction_scores.view(-1, cls.config.vocab_size), mlm_labels.view(-1))
         masked_lm_loss = loss_fct(prediction_scores.view(-1, 2), e_labels.view(-1))
+        #===Ablation Study 1: Removing contrastive loss===
         loss = loss + cls.model_args.lambda_weight * masked_lm_loss
-        # loss = cls.model_args.lambda_weight * masked_lm_loss
+        #Just comment the above line
 
     if not return_dict:
         output = (cos_sim,) + outputs[2:]
@@ -462,7 +480,7 @@ class RobertaForCL(RobertaPreTrainedModel):
 
 
 
-### Knowledge Distillation
+# ===Variant 3: Knowledge Distillation===
 class DistillForCL(DistilBertPreTrainedModel):
     _keys_to_ignore_on_load_missing = [r"position_ids"]
 
