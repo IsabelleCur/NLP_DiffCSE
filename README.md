@@ -117,6 +117,7 @@ Model Analysis Study
 3. Knowledge distillation([Hinton et al., 2015](https://arxiv.org/abs/1503.02531)) 
 
 ### Main changes
+*For convenience, we provide the main changes that we mode to help reproduction.*
 
 For Reproduce of the ablation experiment 1, we modified in diffcse/models.py, beginning at line 306.
 
