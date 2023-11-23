@@ -93,11 +93,42 @@ arguments:
 * `--generator_name`: the model name of generator. For `bert-base-uncased`, we use `distilbert-base-uncased`. For `roberta-base`, we use `distilroberta-base`.
 
 * `--train_file`: Training file path (`data/wiki1m_for_simcse.txt`). 
-* `--model_name_or_path`: Pre-trained checkpoints to start with such as BERT-based models (`bert-base-uncased`, `bert-large-uncased`, etc.) and RoBERTa-based models (`RoBERTa-base`, `RoBERTa-large`), and distillBERT-based models (`distillbert-base-uncased`) we used in variant 3. 
+* `--model_name_or_path`: Pre-trained checkpoints to start with such as BERT-based models (`bert-base-uncased`, `bert-large-uncased`, etc.) and RoBERTa-based models (`RoBERTa-base`, `RoBERTa-large`), and distillBERT-based models (`distillbert-base-uncased`) we added for variant 3. 
 * `--temp`: Temperature for the contrastive loss. We changed it for variant 1.
 * `--pooler_type`: Pooling method.
 * `--mlp_only_train`: For unsupervised SimCSE or DiffCSE, it works better to train the model with MLP layer but test the model without it. You should use this argument when training unsupervised SimCSE/DiffCSE models.
 
+## Type of Study
+
+Model Analysis Study
+
+### Reproduce
+
+1. Removing contrastive loss
+2. Next sentence vs. same sentence
+3. Masking Ratio
+4. Coefficient λ
+5. Pooler choice
+
+### Variant
+
+1. Temperature
+2. Dot Product
+3. Knowledge distillation([Hinton et al., 2015](https://arxiv.org/abs/1503.02531)) 
+
+### Main changes
+
+For Reproduce of the ablation experiment 1, we modified in diffcse/models.py, beginning at line 306.
+
+For abalation 2, we modified train.py, beginning at line 473.
+
+For ablation 3, 4, and variant 1, they can be realized by changing in the sbatch file, which we have commented at corresponding lines.
+
+For ablation 5, we modified in diffcse/models.py lines 56~68.
+
+For Variant 2, we modified in diffcse/models.py, beginning at line 87 and 270.
+
+For Variant 3, we modified the train.py(beginning ant line 361) and diffcse/models.py(beginning at line 10, 181, 483), and added a file: modeling_distillbert.py.
 
 ## Pretrained models
 
