@@ -5,7 +5,7 @@ Reproduction and Improvements on [DiffCSE](https://arxiv.org/abs/2204.10298). Pl
 
 ![DiffCSE](diffcse.png)
 
-DiffCSE is an unsupervised contrastive sentence embedding model that builds on the top of SimCSE and ELECTRA model with slight modification. Claimed by the authors, it achieves new state-of-the-art among other same category learning methods. We reproduce some of the ablation studies mentioned in the DiffCSE and propose three model variants for further analysis.
+DiffCSE is an unsupervised contrastive sentence embedding model that builds on the top of SimCSE and ELECTRA model with slight modification. Claimed by the authors, it achieves new state-of-the-art among other same category learning methods. We reproduce most of the ablation studies mentioned in the DiffCSE and propose three model variants for further analysis.
 
 ## Setups
 
