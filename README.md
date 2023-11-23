@@ -120,4 +120,4 @@ For ablation 5, we modified in diffcse/models.py lines 56~68.
 
 For Variant 2, we modified in diffcse/models.py, beginning at line 87 and 270.
 
-For Variant 3, we modified the train.py and diffcse/models.py, and added a file: modeling_distillbert.py.
+For Variant 3, we modified the train.py(beginning ant line 361) and diffcse/models.py(beginning at line 10, 181, 483), and added a file: modeling_distillbert.py.
