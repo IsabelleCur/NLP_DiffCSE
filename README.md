@@ -41,7 +41,7 @@ bash download_dataset.sh
 
 ## Training and Evaluation
 
-We trained the model on single NVIDIA 2080 Ti applied from HKU GPU Farm. If your program does not require user interaction during execution, you can submit it to the system in batch mode. Your job will be scheduled in the background. You do not need to maintain a terminal session on the gateway node to wait for output. To submit a batch job, e.g. my-gpu-batch.sbatch:
+We trained the model on single NVIDIA 2080 Ti applied from HKU GPU Farm. **Normally, it takes 5 hours to train, while our variant only takes 2 hours.** If your program does not require user interaction during execution, you can submit it to the system in batch mode. Your job will be scheduled in the background. You do not need to maintain a terminal session on the gateway node to wait for output. To submit a batch job, e.g. my-gpu-batch.sbatch:
 
 ```
 #!/bin/bash
@@ -90,10 +90,10 @@ arguments:
 
 * `--lambda_weight`: the lambda coefficient is for the loss, we changed it for ablation 4.
 * `--masking_ratio`: the masking ratio for MLM generator to randomly replace tokens, we changed it for ablaion 3.
-* `--generator_name`: the model name of generator. For `bert-base-uncased`, we use `distilbert-base-uncased`. For `roberta-base`, we use `distilroberta-base`.
+* `--generator_name`: the model name of generator. For `bert-base-uncased`, we use `distilbert-base-uncased`. For `roberta-base`, we use `distilroberta-base`. **For knowledge distillation, we use `distilbert-base-uncased` for generator and encoder.**.
 
 * `--train_file`: Training file path (`data/wiki1m_for_simcse.txt`). 
-* `--model_name_or_path`: Pre-trained checkpoints to start with such as BERT-based models (`bert-base-uncased`, `bert-large-uncased`, etc.) and RoBERTa-based models (`RoBERTa-base`, `RoBERTa-large`), and distillBERT-based models (`distillbert-base-uncased`) we added for variant 3. 
+* `--model_name_or_path`: Pre-trained checkpoints to start with such as BERT-based models (`bert-base-uncased`, `bert-large-uncased`, etc.) and RoBERTa-based models (`RoBERTa-base`, `RoBERTa-large`), and distillBERT-based models (`distillbert-base-uncased`), which we added for variant 3. 
 * `--temp`: Temperature for the contrastive loss. We changed it for variant 1.
 * `--pooler_type`: Pooling method.
 * `--mlp_only_train`: For unsupervised SimCSE or DiffCSE, it works better to train the model with MLP layer but test the model without it. You should use this argument when training unsupervised SimCSE/DiffCSE models.
@@ -132,12 +132,14 @@ For Variant 3, we modified the train.py(beginning ant line 361) and diffcse/mode
 
 ## Pretrained models
 
-[![Hugging Face Models](https://img.shields.io/badge/%F0%9F%A4%97-Models-yellow)](https://huggingface.co/voidism)
+DiffCSE: [![Hugging Face Models](https://img.shields.io/badge/%F0%9F%A4%97-Models-yellow)](https://huggingface.co/voidism)
+Variant: [![Hugging Face Models](https://img.shields.io/badge/%F0%9F%A4%97-Models-yellow)](https://huggingface.co/BillBao)
 
 * DiffCSE-BERT-base (STS): https://huggingface.co/voidism/diffcse-bert-base-uncased-sts
 * DiffCSE-BERT-base (transfer tasks): https://huggingface.co/voidism/diffcse-bert-base-uncased-trans
 * DiffCSE-RoBERTa-base (STS): https://huggingface.co/voidism/diffcse-roberta-base-sts
 * DiffCSE-RoBERTa-base (transfer tasks): https://huggingface.co/voidism/diffcse-roberta-base-trans
+* DiffCSE-DistilBert (STS): https://huggingface.co/BillBao/DiffCSE-DistilBert
 
 We can load the models using the API provided by [SimCSE](https://github.com/princeton-nlp/SimCSE). 
 See [Getting Started](https://github.com/princeton-nlp/SimCSE#getting-started) for more information.
@@ -148,4 +150,5 @@ model_bert_sts = DiffCSE("voidism/diffcse-bert-base-uncased-sts")
 model_bert_trans = DiffCSE("voidism/diffcse-bert-base-uncased-trans")
 model_roberta_sts = DiffCSE("voidism/diffcse-roberta-base-sts")
 model_roberta_trans = DiffCSE("voidism/diffcse-roberta-base-trans")
+model_distilbert_sts = DiffCSE("BillBao/DiffCSE-DistilBert")
 ```
