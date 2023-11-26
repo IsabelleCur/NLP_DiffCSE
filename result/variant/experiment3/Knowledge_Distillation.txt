@@ -1,0 +1,17 @@
+epoch = 2.0
+eval_CR = 85.35
+eval_MPQA = 88.56
+eval_MR = 79.17
+eval_MRPC = 74.66
+eval_SST2 = 84.52
+eval_SUBJ = 94.33
+eval_TREC = 79.73
+eval_avg_sts = 0.7803773448593824
+eval_avg_transfer = 83.75999999999999
+eval_sickr_spearman = 0.7298932496332382
+eval_stsb_spearman = 0.8308614400855265
+
+
+epoch = 2.0
+train_runtime = 10033.0489 
+train_samples_per_second = 3.115
