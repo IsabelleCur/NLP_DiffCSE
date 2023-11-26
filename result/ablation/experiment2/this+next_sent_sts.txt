@@ -1,0 +1,17 @@
+epoch = 2.0
+eval_CR = 84.79
+eval_MPQA = 88.13
+eval_MR = 76.15
+eval_MRPC = 73.11
+eval_SST2 = 82.8
+eval_SUBJ = 93.74
+eval_TREC = 84.04
+eval_avg_sts = 0.7465621343433619
+eval_avg_transfer = 83.25142857142858
+eval_sickr_spearman = 0.7108471887933747
+eval_stsb_spearman = 0.7822770798933493
+
+
+LR=7e-6
+MASK=0.30
+LAMBDA=0.005
