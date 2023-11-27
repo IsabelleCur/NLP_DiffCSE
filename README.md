@@ -39,6 +39,21 @@ cd SentEval/data/downstream/
 bash download_dataset.sh
 ```
 
+### Main changes
+*For convenience, we provide the main changes that we mode to help reproduction.*
+
+For Reproduce of the ablation experiment 1, we modified in diffcse/models.py, beginning at line 306.
+
+For abalation 2, we modified train.py, beginning at line 473.
+
+For ablation 3, 4, and variant 1, they can be realized by changing in the sbatch file, which we have commented at corresponding lines.
+
+For ablation 5, we modified in diffcse/models.py lines 56~68.
+
+For Variant 2, we modified in diffcse/models.py, beginning at line 87 and 270.
+
+For Variant 3, we modified the train.py(beginning ant line 361) and diffcse/models.py(beginning at line 10, 181, 483), and added a file: modeling_distillbert.py.
+
 ## Training and Evaluation
 
 We trained the model on single NVIDIA 2080 Ti applied from HKU GPU Farm. **Normally, it takes 5 hours to train, while our variant only takes 2 hours.** If your program does not require user interaction during execution, you can submit it to the system in batch mode. Your job will be scheduled in the background. You do not need to maintain a terminal session on the gateway node to wait for output. To submit a batch job, e.g. my-gpu-batch.sbatch:
@@ -115,21 +130,6 @@ Model Analysis Study
 1. Temperature
 2. Dot Product
 3. Knowledge distillation([Hinton et al., 2015](https://arxiv.org/abs/1503.02531)) 
-
-### Main changes
-*For convenience, we provide the main changes that we mode to help reproduction.*
-
-For Reproduce of the ablation experiment 1, we modified in diffcse/models.py, beginning at line 306.
-
-For abalation 2, we modified train.py, beginning at line 473.
-
-For ablation 3, 4, and variant 1, they can be realized by changing in the sbatch file, which we have commented at corresponding lines.
-
-For ablation 5, we modified in diffcse/models.py lines 56~68.
-
-For Variant 2, we modified in diffcse/models.py, beginning at line 87 and 270.
-
-For Variant 3, we modified the train.py(beginning ant line 361) and diffcse/models.py(beginning at line 10, 181, 483), and added a file: modeling_distillbert.py.
 
 ## Pretrained models
 
